@@ -1,0 +1,48 @@
+.bg_div_cont{
+    width: 800px;
+    height: 500px;
+    margin: 0 auto;
+    margin-top: 110px;
+    border-radius: 20px;
+    box-shadow: 1px 1px 10px black;
+    background-color: #222A34;
+}
+
+.bg_div_header_title{
+    color: white;
+    font-size: 30px;
+    text-align: right;
+    padding-right: 25px;
+    padding-top: 10px;
+}
+
+.bg_div_header_button{
+    background-color: #475366;
+    border: 0;
+    color: white;
+    height: 26px;
+    border-radius: 25px;
+    float: left;
+    margin-left: 20px;
+    background-image: url('./assets/Upload.png');
+    width: 120px;
+    background-repeat: no-repeat;
+    background-position: 5px 6px;
+}
+
+.bg_div_header_subtext{
+    color: white;
+    text-align: left;
+    padding-left: 160px;
+    width: 318px;
+}
+
+.bg_div_header{
+    position: relative;
+}
+
+.close_img{
+    position: absolute;
+    left: 16px;
+    top: 16px;
+}
