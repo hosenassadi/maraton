@@ -6,14 +6,20 @@ import banner from './assets/banner.png'
 import { useState } from "react";
 
 import DownloadImg from './DownloadImg';
+import Image from './Image'
 
 function BgRemove() {
 
   const [tabname, settabname] = useState('no_bg');
 
-  function tab_click() {
-    debugger;
-    settabname('original');
+  function tab_click(e) {
+
+    if (e.target.className =="tab_button_original") {
+       settabname('original');
+    } else {
+      settabname('no_bg');
+    }
+   
   }
 
   return (
@@ -29,9 +35,18 @@ function BgRemove() {
             <div className="main_cont">
                 <div className="main_left">
                     <div className="middle_div_left">
-                        <div className="tab_button_no_bg" onClick={tab_click}> הוסר רקע </div>
-                        <div className="tab_button_original" onClick={tab_click}> מקורי </div>
+                        <div className="tab_button_no_bg" style={{borderBottom: (tabname=="no_bg" ? "3px solid #9C27B0": "")}} onClick={tab_click}> הוסר רקע </div>
+                        <div className="tab_button_original"  style={{borderBottom: (tabname=="original" ? "3px solid #9C27B0": "")}} onClick={tab_click}> מקורי </div>
+                    
+                    {tabname == "no_bg" ? 
+                        <Image  image_only={false}/>
+                        : 
+                        <Image image_only={true}/>
+                    }
+
                     </div>
+
+                  
 
                   <div className="main_left_footer">
                       <div className="main_left_footer_text"> על ידי העלאת תמונה אתה מסכים לתנאים וההגבלות.</div>

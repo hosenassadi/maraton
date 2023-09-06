@@ -110,14 +110,16 @@ body{
 .tab_button_no_bg{
     background-image: url('./assets/Cleanup\ Edges.png');
     background-position: 62px 4px;
-    border-bottom: 3px solid #9C27B0;
+ 
     padding-bottom: 8px;
+    cursor: pointer;
 }
 
 .tab_button_original{
     background-image: url('./assets/Image.png');
     background-position: 55px 4px;
     padding-bottom: 8px;
+    cursor: pointer;
 }
 
 
