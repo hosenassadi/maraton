@@ -6,6 +6,9 @@ import newImg from './assets/new.png'
 function DownloadImg(props) {
  console.log(props);
 
+ function open_download_popup() {
+
+ }
  
 
   return (
@@ -17,9 +20,12 @@ function DownloadImg(props) {
        </div>
       
        <div  className="DownloadImg_subtitle"> {props.subtitle} </div>
-       <button className="DownloadImg_btn"> {props.btnText} </button>
+       <button className="DownloadImg_btn" onClick={open_download_popup}> {props.btnText} </button>
 
        <div  className="DownloadImg_subsubtext"> {props.subsubtext} </div>
+
+    
+
     </div>
   
   );
