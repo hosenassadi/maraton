@@ -7,7 +7,7 @@ function DownloadImg(props) {
  console.log(props);
 
  function open_download_popup() {
-
+    props.show_popup()
  }
  
 

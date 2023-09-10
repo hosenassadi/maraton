@@ -4,14 +4,22 @@ import close from './assets/close.png'
 import logo from './assets/logo.png'
 import banner from './assets/banner.png'
 import { useState , useRef } from "react";
-
+import axios from 'axios';
 import DownloadImg from './DownloadImg';
 import Image from './Image'
 
+import DownloadsFolder from './assets/Downloads Folder.png';
+
+import close1 from './assets/close1.png'
+import not_robot from './assets/not_robot.png'
 function BgRemove() {
 
   const [tabname, settabname] = useState('no_bg');
   const [open_poup, setopen_poup] = useState(false);
+
+  const [open_poup_download, setopen_poup_download] = useState(false);
+
+  const [show_error, setshow_error] = useState(false);
 
   const inputFileElement = useRef();
 
@@ -39,6 +47,38 @@ function BgRemove() {
     setopen_poup(false);
   }
 
+  function show_popup_func() {
+    setopen_poup_download(true);
+  }
+
+  function send_to_server(e) {
+
+   let file = e.target.files[0];
+
+    if(file.type=="image/png" || file.type=="image/jpeg") {
+
+      setshow_error(false);
+
+      let formData = new FormData();
+
+      formData.append("UploadedFile", file);
+
+      let headers={
+        "Content-Type": "multipart/form-data"
+      }
+
+
+      axios.post('http://localhost:5000/upload_img', formData, headers)
+        .then(res => {
+            console.log(res);
+        
+        })
+    } else {
+      setshow_error(true);
+    }
+   
+  }
+
   return (
     <div>
         <div className='bg_div_cont'>
@@ -46,9 +86,10 @@ function BgRemove() {
                 <img src={close} className='close_img'/>
                 <div className="bg_div_header_title"> העלאת תמונה כדי להסיר את הרקע </div>
                 <button className="bg_div_header_button" onClick={focusInput}> העלאת תמונה </button>
-                <input type="file" ref={inputFileElement} className='file_input'/>
+                <input type="file" ref={inputFileElement} onChange={send_to_server} className='file_input'/>
 
                 <div className="bg_div_header_subtext"> פורמטים נתמכים png, jpeg</div>
+                {show_error ? <div className='error'> קובץ לא נתמך </div>: "" }
             </div>
 
             <div className="main_cont">
@@ -76,7 +117,7 @@ function BgRemove() {
 
                 <div className="main_right">
                   <div className="middle_div_right">
-                    <DownloadImg title="תמונה חינם" subtitle="612x408  תצוגה מקדימה של תמונה" btnText="הורד" subsubtext="איכות טובה עד 0.25 מגה פיקסל" borderFlag={true} newImage={false}/>
+                    <DownloadImg  show_popup={show_popup_func} title="תמונה חינם" subtitle="612x408  תצוגה מקדימה של תמונה" btnText="הורד" subsubtext="איכות טובה עד 0.25 מגה פיקסל" borderFlag={true} newImage={false}/>
                     <DownloadImg title="Pro" subtitle="1280x1920 תמונה מלאה " btnText=" HD הורד"  subsubtext="איכות טובה עד 0.25 מגה פיקסל" borderFlag={false} newImage={true}/>
                   </div>
                 </div>
@@ -109,25 +150,28 @@ function BgRemove() {
         : "" }
 
 
-
+{open_poup_download ? 
       <div className="download_popup">
+          <img src={close1} className='close_img_popup' onClick={()=>setopen_poup_download(false)}/>
           <div className='top_img'>
-            
+            <img src={DownloadsFolder} className='DownloadsFolder'/>
           </div>
 
           <div className='download_popup_title'> אישור להורדת תמונה </div>
           <div className='download_popup_subtitle'> האם להוריד את התמונה ? </div>
 
           <div className='not_robot_cont'>
+          <img src={not_robot}  className='not_robot'/>
           <span  className='download_popup_not_robot'> אני לא רובוט </span>
+         
            <input  className='download_popup_checkbox' type="checkbox" /> 
           
           </div>
 
-        <button  className='download_popup_cencel'> ביטול </button> 
+        <button  className='download_popup_cencel' onClick={()=>setopen_poup_download(false)}> ביטול </button> 
         <button className='download_popup_approve'> אישור </button> 
 
-      </div>
+      </div> : "" }
 
     </div>
   );
