@@ -9,6 +9,7 @@ function Image(props) {
     const [color, setcolor] = useState('red');
     const [image_only_disp, setimage_only_disp] = useState('');
 
+    console.log(props.upload_img_name);
     useEffect(() => {
         if(props.image_only==true) {
             setimage_only_disp('image_only_disp');
@@ -43,7 +44,9 @@ function Image(props) {
                      : '' }
 
                      <div className={`image_pace ${image_only_disp}`} >
-
+                        {props.upload_img_name && props.upload_img_name!="no_bg_false" ? 
+                        <img className="uploaded_img" src={'http://localhost:5000/'+props.upload_img_name} />
+                        : "" }
                     
                     </div>  
             </div>

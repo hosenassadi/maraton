@@ -21,6 +21,9 @@ function BgRemove() {
 
   const [show_error, setshow_error] = useState(false);
 
+  const [upload_img_name, setupload_img_name] = useState(false);
+
+
   const inputFileElement = useRef();
 
   const focusInput = () => {
@@ -70,8 +73,7 @@ function BgRemove() {
 
       axios.post('http://localhost:5000/upload_img', formData, headers)
         .then(res => {
-            console.log(res);
-        
+            setupload_img_name(res.data);
         })
     } else {
       setshow_error(true);
@@ -99,9 +101,9 @@ function BgRemove() {
                         <div className="tab_button_original"  style={{borderBottom: (tabname=="original" ? "3px solid #9C27B0": "")}} onClick={tab_click}> מקורי </div>
                     
                     {tabname == "no_bg" ? 
-                        <Image  image_only={false}/>
+                        <Image  image_only={false} upload_img_name={"no_bg_"+upload_img_name}/>
                         : 
-                        <Image image_only={true}/>
+                        <Image image_only={true} upload_img_name={upload_img_name}/>
                     }
 
                     </div>

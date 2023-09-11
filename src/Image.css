@@ -50,10 +50,21 @@
 .image_pace{
     border:1px solid white;
     height: 294px;
+    position: relative;
 } 
 
 
 .image_only_disp{
-    top: 56px;
+    top: 25px;
     position: relative;
+    overflow: auto;
+    width: 100%;
+}
+
+
+.uploaded_img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
 }
