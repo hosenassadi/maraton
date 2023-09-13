@@ -9,7 +9,12 @@ function Image(props) {
     const [color, setcolor] = useState('red');
     const [image_only_disp, setimage_only_disp] = useState('');
     const [upload_img_name, setupload_img_name] = useState(props.upload_img_name);
-    
+    const [show_loader, setshow_loader] = useState(props.show_loader);
+
+    useEffect(() => {
+        setshow_loader(props.show_loader);
+    },[props.show_loader]);
+
     useEffect(() => {
         setupload_img_name(props.upload_img_name);
     },[props.upload_img_name]);
@@ -35,6 +40,9 @@ function Image(props) {
     function color_choose_func(e){
 
         if(upload_img_name && upload_img_name!="no_bg_false") {
+            setshow_loader(true);
+
+           
             console.log(e.target.value);
 
             let formData = new FormData();
@@ -46,6 +54,7 @@ function Image(props) {
                 .then(res => {
                     setupload_img_name(res.data);
                     props.color_func();
+                    setshow_loader(false);
                 })
         } else {
             console.log("no_file_uploaded");
@@ -74,6 +83,13 @@ function Image(props) {
                         : "" }
                     
                     </div>  
+
+                    {show_loader? 
+                     <div className='loader'> 
+                        <div className='loader_in'>39%</div>
+                    </div> : ""
+                    }
+                  
             </div>
         </div>
     );

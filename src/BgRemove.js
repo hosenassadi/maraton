@@ -23,7 +23,7 @@ function BgRemove() {
 
   const [upload_img_name, setupload_img_name] = useState(false);
   const [colorexist, setcolorexist] = useState(false);
-
+  const [show_loader, setshow_loader] = useState(false);
 
   const inputFileElement = useRef();
 
@@ -61,8 +61,9 @@ function BgRemove() {
 
     if(file.type=="image/png" || file.type=="image/jpeg") {
 
+      setshow_loader(true);
       setshow_error(false);
-
+      
       let formData = new FormData();
 
       formData.append("UploadedFile", file);
@@ -75,6 +76,7 @@ function BgRemove() {
       axios.post('http://localhost:5000/upload_img', formData, headers)
         .then(res => {
             setupload_img_name(res.data);
+            setshow_loader(false);
         })
     } else {
       setshow_error(true);
@@ -85,6 +87,23 @@ function BgRemove() {
   function color_exist(){
       setcolorexist(true);
   }
+
+
+  async  function download_img() {
+
+  await fetch("http://localhost:5000/no_bg_"+upload_img_name)
+    .then(response => {
+        response.blob().then(blob => {
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = '"http://localhost:5000/"+image_name';
+            a.click();
+        });
+        
+ });
+}
+
 
   return (
     <div>
@@ -106,7 +125,7 @@ function BgRemove() {
                         <div className="tab_button_original"  style={{borderBottom: (tabname=="original" ? "3px solid #9C27B0": "")}} onClick={tab_click}> מקורי </div>
                     
                     {tabname == "no_bg" ? 
-                        <Image  image_only={false} upload_img_name={(colorexist ? "color_" : "") +"no_bg_"+upload_img_name} color_func={color_exist}/>
+                        <Image show_loader={show_loader} image_only={false} upload_img_name={(colorexist ? "color_" : "") +"no_bg_"+upload_img_name} color_func={color_exist}/>
                         : 
                         <Image image_only={true} upload_img_name={upload_img_name}/>
                     }
@@ -176,7 +195,7 @@ function BgRemove() {
           </div>
 
         <button  className='download_popup_cencel' onClick={()=>setopen_poup_download(false)}> ביטול </button> 
-        <button className='download_popup_approve'> אישור </button> 
+        <button className='download_popup_approve' onClick={download_img}> אישור </button> 
 
       </div> : "" }
 

@@ -19,7 +19,7 @@ const path = require('path');
 
 app.post('/upload_img', function (req, res) {
 
-    console.log(req.files);
+  
     let time=new Date().getTime();
     let fileName=time+"_"+req.files.UploadedFile.name;
 
@@ -43,11 +43,12 @@ app.post('/upload_img', function (req, res) {
             responseType: 'arraybuffer',
             headers: {
               ...formData.getHeaders(),
-              'X-Api-Key': 'HJi4YytfoEUoJtX9PDdYu17o',
+              'X-Api-Key': 'QjvfyWTkzdiPvrbdmgDLbqvb',
             },
             encoding: null
           })
           .then((response) => {
+
             if(response.status != 200) return console.error('Error:', response.status, response.statusText);
 
             (async () => {
@@ -60,8 +61,6 @@ app.post('/upload_img', function (req, res) {
               return console.error('Request failed:', error);
           });
 
-       
-
       }
 
     });
@@ -71,7 +70,6 @@ app.post('/upload_img', function (req, res) {
 
 app.post('/upload_image_with_color', function (req, res) {
 
-  console.log(req);
 
   let fileName=req.body.UploadedFileName;
   let color=req.body.color;
