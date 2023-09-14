@@ -29,7 +29,12 @@ app.post('/upload_img', function (req, res) {
           const inputPath = `${__dirname}/upload_img/${fileName}`;
           const fileNameDes=`${__dirname}/upload_img_no_bg/no_bg_${fileName}`;
 
-          sent_to_api(inputPath , '' , fileNameDes );
+          (async () => {
+              await sent_to_api(inputPath , '' , fileNameDes );
+              res.send(`${fileName}`);
+          }) ();
+
+     
       }
 
     });
@@ -46,7 +51,13 @@ app.post('/upload_image_with_color', function (req, res) {
 
   const fileNameDes=`${__dirname}/upload_img_color/color_${fileName}`;
 
-  sent_to_api(inputPath , color , fileNameDes );
+
+  (async () => {
+    await sent_to_api(inputPath , color , fileNameDes );
+    res.send(`${fileName}`);
+  }) ();
+
+
 })
 
 app.listen(5000);

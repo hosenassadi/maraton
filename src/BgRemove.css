@@ -275,3 +275,10 @@ body{
     left: 200px;
     top: 63px;
 }
+
+.displyMsg{
+    position: absolute;
+    left: -105px;
+    top: 0px;
+    color: red;
+}

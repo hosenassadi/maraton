@@ -25,7 +25,9 @@ function BgRemove() {
   const [upload_img_name, setupload_img_name] = useState(false);
   const [colorexist, setcolorexist] = useState(false);
   const [show_loader, setshow_loader] = useState(false);
-
+  const [displyMsg, setdisplyMsg] = useState(false);
+  const [checkboxchecked, setcheckboxchecked] = useState(false);
+  
   const inputFileElement = useRef();
 
   const focusInput = () => {
@@ -92,17 +94,37 @@ function BgRemove() {
 
   async  function download_img() {
 
-  await fetch("http://localhost:5000/no_bg_"+upload_img_name)
-    .then(response => {
-        response.blob().then(blob => {
-            let url = window.URL.createObjectURL(blob);
-            let a = document.createElement('a');
-            a.href = url;
-            a.download = upload_img_name;
-            a.click();
-        });
- });
+    if (checkboxchecked) {
+        let pref="no_bg_";
+
+        if (colorexist) {
+          pref= "color_no_bg_" ;
+        }
+
+      await fetch("http://localhost:5000/"+ pref +upload_img_name)
+        .then(response => {
+            response.blob().then(blob => {
+                let url = window.URL.createObjectURL(blob);
+                let a = document.createElement('a');
+                a.href = url;
+                a.download = upload_img_name;
+                a.click();
+            });
+      });
+    } else {
+      setdisplyMsg(true);
+    }
 }
+
+  function updatecheckboxstate(e) {
+   
+    if(e.target.checked) {
+      setcheckboxchecked(true); 
+    } else {
+      setcheckboxchecked(false); 
+    }
+    
+  }
 
 
   return (
@@ -189,8 +211,10 @@ function BgRemove() {
           <div className='not_robot_cont'>
           <img src={not_robot}  className='not_robot'/>
           <span  className='download_popup_not_robot'> אני לא רובוט </span>
-         
-           <input  className='download_popup_checkbox' type="checkbox" /> 
+
+          {displyMsg ? <div className='displyMsg'> נא לסמן אני לא רובוט</div> : "" }
+
+           <input  className='download_popup_checkbox' type="checkbox" onChange={updatecheckboxstate}/> 
           
           </div>
 
