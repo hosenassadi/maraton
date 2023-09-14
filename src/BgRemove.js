@@ -12,6 +12,7 @@ import DownloadsFolder from './assets/Downloads Folder.png';
 
 import close1 from './assets/close1.png'
 import not_robot from './assets/not_robot.png'
+
 function BgRemove() {
 
   const [tabname, settabname] = useState('no_bg');
@@ -97,10 +98,9 @@ function BgRemove() {
             let url = window.URL.createObjectURL(blob);
             let a = document.createElement('a');
             a.href = url;
-            a.download = '"http://localhost:5000/"+image_name';
+            a.download = upload_img_name;
             a.click();
         });
-        
  });
 }
 
